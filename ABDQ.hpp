@@ -18,9 +18,30 @@ private:
 
 public:
     // Big 5
-    ABDQ();
-    explicit ABDQ(std::size_t capacity);
-    ABDQ(const ABDQ& other);
+    ABDQ(){
+        capacity_ = 4;
+        size_ = 0;
+        front_ = 0;
+        back_ = 0;
+        data_ = new T[capacity_];
+    }
+    explicit ABDQ(std::size_t capacity){
+        capacity_ = capacity;
+        size_ = 0;
+        front_ = 0;
+        back_ = 0;
+        data_ = new T[capacity_];
+    }
+    ABDQ(const ABDQ& other){
+        capacity_ = other.capacity_;
+        size_ = other.size_;
+        front_ = other.front_;
+        back_ = other.back_;
+        data_ = new T[capacity_];
+        for (std::size_t i = 0; i < capacity_; i++){
+            data_[i] = other.data_[i];
+        }
+    }
     ABDQ(ABDQ&& other) noexcept;
     ABDQ& operator=(const ABDQ& other);
     ABDQ& operator=(ABDQ&& other) noexcept;

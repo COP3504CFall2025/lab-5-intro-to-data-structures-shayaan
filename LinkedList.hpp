@@ -101,6 +101,7 @@ public:
 		while (head != nullptr){
 			removeHead();
 		}
+		count = 0;
 	}
 
 	// Operators

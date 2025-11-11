@@ -15,22 +15,45 @@ private:
 
 public:
     // Constructor
-    LLDQ();
+    LLDQ(){}
 
     // Core Insertion Operations
-    void pushFront(const T& item) override;
-    void pushBack(const T& item) override;
+    void pushFront(const T& item) override{
+        list.addHead(item);
+    }
+    void pushBack(const T& item) override{
+        list.addTail(item);
+    }
 
     // Core Removal Operations
-    T popFront() override;
-    T popBack() override;
+    T popFront() override{
+        list.removeHead();
+    }
+    T popBack() override{
+        list.removeTail();
+    }
 
     // Element Accessors
-    const T& front() const override;
-    const T& back() const override;
+    const T& front() const override{
+        list.getHead();
+    }
+    const T& back() const override{
+        list.getTail();
+    }
 
     // Getter
-    std::size_t getSize() const noexcept override;
+    std::size_t getSize() const noexcept override{
+        list.getCount();
+    }
+
+    //Print
+    void PrintForward() const{
+        list.printForward();
+    }
+
+    void PrintReverse() const{
+        list.printReverse();
+    }
 };
 
 
