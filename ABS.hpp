@@ -38,16 +38,16 @@ public:
         capacity_ = rhs.capacity_;
         curr_size_ = rhs.curr_size_;
         for (int i = 0; i < capacity_; i++){
-            array_[i] = other.array_[i];
+            array_[i] = rhs.array_[i];
         }
         return *this;
     }
     ABS(ABS&& other) noexcept{
-        array_ = other.data_;
+        array_ = other.array_;
         curr_size_ = other.size_;
         capacity_ = other.capacity_;
 
-        other.data_ = nullptr;
+        other.array_ = nullptr;
         other.size_ = 0;
         other.capacity_ = 0;
     }
@@ -56,11 +56,11 @@ public:
             return *this;
         }
         delete[] array_;
-        array_ = rhs.data_;
+        array_ = rhs.array_;
         curr_size_ = rhs.size_;
         capacity_ = rhs.capacity_;
 
-        rhs.data_ = nullptr;
+        rhs.array_ = nullptr;
         rhs.size_ = 0;
         rhs.capacity_ = 0;
         return *this;

@@ -42,24 +42,142 @@ public:
             data_[i] = other.data_[i];
         }
     }
-    ABDQ(ABDQ&& other) noexcept;
-    ABDQ& operator=(const ABDQ& other);
-    ABDQ& operator=(ABDQ&& other) noexcept;
-    ~ABDQ() override;
+    ABDQ(ABDQ&& other) noexcept{
+        data_ = other.data_;
+        curr_size_ = other.size_;
+        capacity_ = other.capacity_;
+
+        other.data_ = nullptr;
+        other.size_ = 0;
+        other.capacity_ = 0;
+    }
+    ABDQ& operator=(const ABDQ& other){
+        if (this == &other){
+            return *this;
+        }
+        delete[] data_;
+        capacity_ = other.capacity_;
+        size_ = other.size_;
+        front_ = other.front_;
+        back_ = other.back_;
+        data_ = new T[capacity_];
+        for (std::size_t i = 0; i < capacity_; i++){
+            data_[i] = other.data_[i];
+        }
+        return *this;
+    }
+    ABDQ& operator=(ABDQ&& other) noexcept{
+        if (this == &other) {
+            return *this;
+        }
+        delete[] array_;
+        array_ = other.array_;
+        curr_size_ = other.size_;
+        capacity_ = other.capacity_;
+
+        other.array_ = nullptr;
+        other.size_ = 0;
+        other.capacity_ = 0;
+        return *this;
+    }
+    ~ABDQ() override{
+        delete[] data_;
+        data_ = nullptr;
+    }
 
     // Insertion
-    void pushFront(const T& item) override;
-    void pushBack(const T& item) override;
+    void pushFront(const T& item) override{
+        if (size_ == capacity_){
+            if (capacity_ == 0){
+                capacity_ = 1;
+            }
+            else{
+                capacity_ *= 2;
+            }
+            T* temp = new T[capacity_];
+            for (size_t i = 0; i < size_; i++){
+                temp[i+1] = data_[i];
+            }
+            delete[] data_;
+            data_ = temp;
+        }
+        data_[0] = item;
+        size_++;
+    }
+    void pushBack(const T& item) override{
+        if (size_ == capacity_){
+            if (capacity_ == 0){
+                capacity_ = 1;
+            }
+            else{
+                capacity_ *= 2;
+            }
+            T* temp = new T[capacity_];
+            for (size_t i = 0; i < size_; i++){
+                temp[i] = data_[i];
+            }
+            delete[] data_;
+            data_ = temp;
+        }
+        data_[size_] = item;
+        size_++;
+    }
 
     // Deletion
-    T popFront() override;
-    T popBack() override;
+    T popFront() override{
+        if (size_ == 0){
+            throw std::out_of_range("Array is empty");
+        }
+        T popFrontVal = data_[0];
+        for (size_t i = 0; i < size_ - 1; i++){
+            data_[i] = data_[i + 1];
+        }
+        curr_size_--;
+        return popFrontVal;
+    }
+    T popBack() override{
+        if (size_ == 0){
+            throw std::out_of_range("Array is empty");
+        }
+        T popBackVal = data_[size_ - 1];
+        size_--;
+        return popBackVal;
+    }
 
     // Access
-    const T& front() const override;
-    const T& back() const override;
+    const T& front() const override{
+        return data_[0];
+    }
+    const T& back() const override{
+        return data_[size_ - 1];
+    }
 
     // Getters
-    std::size_t getSize() const noexcept override;
+    std::size_t getSize() const noexcept override{
+        return size_;
+    }
+
+    void ensureCapacity(){
+        capacity_ *= 2;
+    }
+
+    void shrinkIfNeeded(){
+        if (size_ < (capacity_/2)){
+            capacity_ /= 2;
+        }
+    }
+
+    //Print Methods
+    void PrintForward() const {
+        for (size_t i = 0; i < size_; i++){
+            std::cout << data_[i] << " ";
+        }
+    }
+
+    void PrintReverse() const{
+        for (size_t i = size_ - 1; i >= 0; i--){
+            std::cout << data_[i] << " ";
+        }
+    }
 
 };
