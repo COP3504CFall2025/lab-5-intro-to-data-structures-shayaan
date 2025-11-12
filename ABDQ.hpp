@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include "Interfaces.hpp"
 #include <utility>
+#include <iostream>
 
 template <typename T>
 class ABDQ : public DequeInterface<T> {
@@ -44,7 +45,7 @@ public:
     }
     ABDQ(ABDQ&& other) noexcept{
         data_ = other.data_;
-        curr_size_ = other.size_;
+        size_ = other.size_;
         capacity_ = other.capacity_;
 
         other.data_ = nullptr;
@@ -70,12 +71,12 @@ public:
         if (this == &other) {
             return *this;
         }
-        delete[] array_;
-        array_ = other.array_;
-        curr_size_ = other.size_;
+        delete[] data_;
+        data_ = other.data_;
+        size_ = other.size_;
         capacity_ = other.capacity_;
 
-        other.array_ = nullptr;
+        other.data_ = nullptr;
         other.size_ = 0;
         other.capacity_ = 0;
         return *this;
@@ -132,7 +133,7 @@ public:
         for (size_t i = 0; i < size_ - 1; i++){
             data_[i] = data_[i + 1];
         }
-        curr_size_--;
+        size_--;
         return popFrontVal;
     }
     T popBack() override{
