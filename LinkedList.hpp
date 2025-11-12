@@ -97,7 +97,7 @@ public:
 		count--;
 		return true;
 	}
-	void Clear(){
+	void clear(){
 		while (head != nullptr){
 			removeHead();
 		}
@@ -161,7 +161,7 @@ public:
 		other.count = 0;
 	}
 	~LinkedList(){
-		Clear();
+		clear();
 	}
 
 private:
