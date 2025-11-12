@@ -44,11 +44,11 @@ public:
     }
     ABS(ABS&& other) noexcept{
         array_ = other.array_;
-        curr_size_ = other.size_;
+        curr_size_ = other.curr_size_;
         capacity_ = other.capacity_;
 
         other.array_ = nullptr;
-        other.size_ = 0;
+        other.curr_size_ = 0;
         other.capacity_ = 0;
     }
     ABS& operator=(ABS&& rhs) noexcept{
@@ -57,11 +57,11 @@ public:
         }
         delete[] array_;
         array_ = rhs.array_;
-        curr_size_ = rhs.size_;
+        curr_size_ = rhs.curr_size_;
         capacity_ = rhs.capacity_;
 
         rhs.array_ = nullptr;
-        rhs.size_ = 0;
+        rhs.curr_size_ = 0;
         rhs.capacity_ = 0;
         return *this;
     }
