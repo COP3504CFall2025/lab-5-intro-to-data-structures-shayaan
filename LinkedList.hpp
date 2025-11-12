@@ -80,6 +80,9 @@ public:
 		if (head != nullptr){
 			head->prev = nullptr;
 		}
+		else{
+			tail = nullptr;
+		}
 		delete current;
 		count--;
 		return true;
@@ -92,6 +95,9 @@ public:
 		tail = tail->prev;
 		if (tail != nullptr){
 			tail->next = nullptr;
+		}
+		else{
+			head = nullptr;
 		}
 		delete current;
 		count--;
@@ -122,23 +128,20 @@ public:
 		if (this == &rhs){
 			return *this;
 		}
-		head = nullptr;
-		tail = nullptr;
-		count = 0;
-		Node* current = rhs.head;
-		while (current != nullptr){
-			addTail(current->data);
-			current = current->next;
-		}
+		LinkedList temp(rhs);
+		this.clear();
+		this->head = temp.head;
+		this->tail = temp.tail;
+		this->count = temp.count;
+		temp.head = nullptr;
+		temp.tail = nullptr;
 		return *this;
 	}
 
 	// Construction/Destruction
 	LinkedList(){
-		head = new Node;
-		tail = new Node;
-		head->next = tail;
-		tail->prev = head;
+		head = nullptr;
+		tail = nullptr;
 		count = 0;
 	}
 	LinkedList(const LinkedList<T>& list){

@@ -71,7 +71,7 @@ public:
         rhs.capacity_ = 0;
         return *this;
     }
-    ~ABQ() noexcept override{
+    ~ABQ() noexcept {
         delete[] array_;
         array_ = nullptr;
     }

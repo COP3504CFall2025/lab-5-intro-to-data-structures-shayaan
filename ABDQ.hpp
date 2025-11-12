@@ -81,7 +81,7 @@ public:
         other.capacity_ = 0;
         return *this;
     }
-    ~ABDQ() override{
+    ~ABDQ() {
         delete[] data_;
         data_ = nullptr;
     }
