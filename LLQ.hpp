@@ -20,7 +20,9 @@ public:
 
     // Deletion
     T dequeue() override{
+        T data = list.getHead()->data;
         list.removeHead();
+        return data;
     }
 
     // Access
