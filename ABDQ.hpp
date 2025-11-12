@@ -170,7 +170,18 @@ public:
 
     void shrinkIfNeeded(){
         if (size_ < (capacity_/2)){
-            capacity_ /= 2;
+            if (size_ == 0){
+                capacity_ = 1;
+            }
+            else{
+                capacity_ /= 2;
+                T* temp = new T[capacity_];
+                for (std::size_t i = 0; i < size_; i++){
+                    temp[i] = data_[i];
+                }
+                delete[] data_;
+                data_ = temp;
+            }
         }
     }
 
