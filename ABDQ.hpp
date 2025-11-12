@@ -127,7 +127,7 @@ public:
     // Deletion
     T popFront() override{
         if (size_ == 0){
-            throw std::out_of_range("Array is empty");
+            throw std::runtime_error("Array is empty");
         }
         T popFrontVal = data_[0];
         for (size_t i = 0; i < size_ - 1; i++){
@@ -138,7 +138,7 @@ public:
     }
     T popBack() override{
         if (size_ == 0){
-            throw std::out_of_range("Array is empty");
+            throw std::runtime_error("Array is empty");
         }
         T popBackVal = data_[size_ - 1];
         size_--;

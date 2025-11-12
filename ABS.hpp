@@ -109,14 +109,14 @@ public:
 
     T peek() const override{
         if (curr_size_ == 0){
-            throw std::out_of_range("Array is empty");
+            throw std::runtime_error("Array is empty");
         }
         return array_[curr_size_ - 1];
     }
 
     T pop() override{
         if (curr_size_ == 0){
-            throw std::out_of_range("Array is empty");
+            throw std::runtime_error("Array is empty");
         }
         T popVal = array_[curr_size_ - 1];
         curr_size_--;
