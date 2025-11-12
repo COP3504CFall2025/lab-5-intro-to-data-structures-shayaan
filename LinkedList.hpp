@@ -129,7 +129,7 @@ public:
 			return *this;
 		}
 		LinkedList temp(rhs);
-		this.clear();
+		this->clear();
 		this->head = temp.head;
 		this->tail = temp.tail;
 		this->count = temp.count;
