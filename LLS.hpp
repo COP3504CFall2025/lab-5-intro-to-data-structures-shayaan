@@ -27,6 +27,9 @@ public:
 
     // Access
     T peek() const override{
+        if (list.getHead() == nullptr){
+            throw std::runtime_error("No elements in list");
+        }
         return list.getHead()->data;
     }
 
