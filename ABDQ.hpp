@@ -80,7 +80,7 @@ public:
         data_ = other.data_;
         size_ = other.size_;
         capacity_ = other.capacity_;
-        front_ = other.front_
+        front_ = other.front_;
         back_ = other.back_;
 
         other.data_ = nullptr;
