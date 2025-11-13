@@ -80,10 +80,14 @@ public:
         data_ = other.data_;
         size_ = other.size_;
         capacity_ = other.capacity_;
+        front_ = other.front_
+        back_ = other.back_;
 
         other.data_ = nullptr;
         other.size_ = 0;
         other.capacity_ = 0;
+        other.front_ = 0;
+        other.back_ = 0;
         return *this;
     }
     ~ABDQ() {
