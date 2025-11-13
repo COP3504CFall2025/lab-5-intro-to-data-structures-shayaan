@@ -27,18 +27,34 @@ public:
 
     // Core Removal Operations
     T popFront() override{
+        if (list.getHead() == nullptr){
+            throw std::runtime_error("No elements in list");
+        }
+        T data = list.getHead()->data;
         list.removeHead();
+        return data;
     }
     T popBack() override{
+        if (list.getTail() == nullptr){
+            throw std::runtime_error("No elements in list");
+        }
+        T data = list.getTail()->data;
         list.removeTail();
+        return data;
     }
 
     // Element Accessors
     const T& front() const override{
-        return list.getHead();
+        if (list.getHead() == nullptr){
+            throw std::runtime_error("No elements in list");
+        }
+        return list.getHead()->data;
     }
     const T& back() const override{
-        return list.getTail();
+        if (list.getTail() == nullptr){
+            throw std::runtime_error("No elements in list");
+        }
+        return list.getTail()->data;
     }
 
     // Getter

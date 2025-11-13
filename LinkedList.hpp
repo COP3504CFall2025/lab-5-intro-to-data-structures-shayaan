@@ -56,16 +56,30 @@ public:
 		newNode->data = data;
 		newNode->prev = nullptr;
 		newNode->next = head;
-		head->prev = newNode;
+
+		if (head != nullptr){
+			head->prev = newNode;
+		}
+		else{
+			tail = newNode;
+		}
+
 		head = newNode;
 		count++;
 	}
 	void addTail(const T& data){
 		Node* newNode = new Node();
 		newNode->data = data;
-		newNode->prev = tail;
 		newNode->next = nullptr;
-		tail->next = newNode;
+		newNode->prev = tail;
+
+		if (tail != nullptr){
+			tail->next = newNode;
+		}
+		else{
+			head = newNode;
+		}
+
 		tail = newNode;
 		count++;
 	}
