@@ -129,7 +129,7 @@ public:
         if (size_ == 0){
             throw std::runtime_error("Array is empty");
         }
-        T popFrontVal = data_[front];
+        T popFrontVal = data_[front_];
         front_ = (front_ + 1) % capacity_;
         size_--;
         return popFrontVal;
