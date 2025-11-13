@@ -123,10 +123,20 @@ public:
             throw std::runtime_error("Array is empty");
         }
         T dequeueVal = array_[0];
-        for (size_t i = 0; i < curr_size_ - 1; i++){
-            array_[i] = array_[i + 1];
+        for (size_t i = 0; i < curr_size_; i++){
+            array_[i] = array_[i-1];
         }
         curr_size_--;
+        if (curr_size_ <= capacity_ / 4 && capacity_ > 1) {
+            capacity_ /= 2;
+            T* array = new T[capacity_];
+            for (size_t i = 0; i < curr_size_; i++){
+                array[i] = array_[i];
+            }
+            delete[] array_;
+            array_ = array;
+        }
+
         return dequeueVal;
     }
 
