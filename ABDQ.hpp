@@ -89,38 +89,57 @@ public:
     // Insertion
     void pushFront(const T& item) override{
         if (size_ == capacity_){
+            size_t new_capacity = 0;
             if (capacity_ == 0){
-                capacity_ = 1;
+                new_capacity = 1;
             }
             else{
-                capacity_ *= 2;
+                new_capacity = capacity_ * 2;
             }
-            T* temp = new T[capacity_];
+            T* temp = new T[new_capacity];
             for (size_t i = 0; i < size_; i++){
-                temp[i+1] = data_[i];
+                temp[i+ 1] = data_[(front_ + i) % capacity_];
             }
             delete[] data_;
             data_ = temp;
+            capacity_ = new_capacity;
+
+            front_ = 0;
+            back_ = size_;
         }
-        data_[0] = item;
+        else{
+            if (front_ == 0){
+                front_ = capacity_ - 1;
+            }
+            else{
+                front_ = front_ - 1;
+            }
+        }
+        data_[front_] = item;
         size_++;
     }
     void pushBack(const T& item) override{
         if (size_ == capacity_){
+            size_t new_capacity = 0;
             if (capacity_ == 0){
-                capacity_ = 1;
+                new_capacity = 1;
             }
             else{
-                capacity_ *= 2;
+                new_capacity = capacity_ * 2;
             }
-            T* temp = new T[capacity_];
+            T* temp = new T[new_capacity];
             for (size_t i = 0; i < size_; i++){
-                temp[i] = data_[i];
+                temp[i] = data_[(front_ + i) % capacity_];
             }
             delete[] data_;
             data_ = temp;
+            capacity_ = new_capacity;
+
+            front_ = 0;
+            back_ = size_;
         }
-        data_[size_] = item;
+        data_[back_] = item;
+        back_ = (back_ + 1) % capacity_;
         size_++;
     }
 
