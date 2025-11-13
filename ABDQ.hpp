@@ -129,10 +129,8 @@ public:
         if (size_ == 0){
             throw std::runtime_error("Array is empty");
         }
-        T popFrontVal = data_[0];
-        for (size_t i = 0; i < size_ - 1; i++){
-            data_[i] = data_[i + 1];
-        }
+        T popFrontVal = data_[front];
+        front_ = (front_ + 1) % capacity_;
         size_--;
         return popFrontVal;
     }
@@ -140,7 +138,8 @@ public:
         if (size_ == 0){
             throw std::runtime_error("Array is empty");
         }
-        T popBackVal = data_[size_ - 1];
+        T popBackVal = data_[(back_ + capacity_ - 1) % capacity_];
+        back_ = (back_ - 1 + capacity_) % capacity_;
         size_--;
         return popBackVal;
     }
@@ -150,13 +149,13 @@ public:
         if (size_ == 0){
             throw std::runtime_error("Array is empty");
         }
-        return data_[0];
+        return data_[front_];
     }
     const T& back() const override{
         if (size_ == 0){
             throw std::runtime_error("Array is empty");
         }
-        return data_[size_ - 1];
+        return data_[(back_ + capacity_ - 1) % capacity_];
     }
 
     // Getters
@@ -165,36 +164,62 @@ public:
     }
 
     void ensureCapacity(){
+        if (capacity_ == 0){
+            capacity_ = 1;
+        }
+        size_t old_capacity = capacity_;
         capacity_ *= 2;
+        size_t j = 0;
+        T* temp = new T[capacity_];
+        for (std::size_t i = front_; i != back_; i = (i + 1) % old_capacity){
+            temp[j] = data_[i];
+            j++;
+        }
+        front_ = 0;
+        back_ = j;
+        size_ = j;
+        delete[] data_;
+        data_ = temp;
     }
 
     void shrinkIfNeeded(){
         if (size_ < (capacity_/2)){
             if (size_ == 0){
-                capacity_ = 1;
-            }
-            else{
-                capacity_ /= 2;
-                T* temp = new T[capacity_];
-                for (std::size_t i = 0; i < size_; i++){
-                    temp[i] = data_[i];
-                }
                 delete[] data_;
-                data_ = temp;
+                capacity_ = 1;
+                data_ = new T[capacity_];
+                front_ = 0;
+                back_ = 0;
+                return;
             }
+            size_t old_capacity = capacity_;
+            capacity_ /= 2;
+            size_t j = 0;
+            T* temp = new T[capacity_];
+            for (std::size_t i = front_; i != back_; i = (i + 1) % old_capacity){
+                temp[j] = data_[i];
+                j++;
+            }
+            front_ = 0;
+            back_ = j;
+            size_ = j;
+            delete[] data_;
+            data_ = temp;
         }
     }
 
     //Print Methods
     void PrintForward() const {
-        for (size_t i = 0; i < size_; i++){
+        for (std::size_t i = front_; i != back_; i = (i + 1) % capacity_){
             std::cout << data_[i] << " ";
         }
     }
 
     void PrintReverse() const{
-        for (size_t i = size_ - 1; i >= 0; i--){
+        size_t i = (back_ + capacity_ - 1) % capacity_;
+        for (size_t count = 0; count < size_; count++){
             std::cout << data_[i] << " ";
+            i = (i + capacity_ - 1) % capacity_;
         }
     }
 

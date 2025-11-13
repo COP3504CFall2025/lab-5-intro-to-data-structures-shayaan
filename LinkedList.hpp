@@ -75,14 +75,17 @@ public:
 		if (head == nullptr){
 			return false;
 		}
+		if (count == 1){
+			delete head;
+			head = nullptr;
+			tail = nullptr;
+			count = 0;
+			return true;
+		}
 		Node* current = head;
 		head = head->next;
-		if (head != nullptr){
-			head->prev = nullptr;
-		}
-		else{
-			tail = nullptr;
-		}
+		head->prev = nullptr;
+
 		delete current;
 		count--;
 		return true;
@@ -91,14 +94,17 @@ public:
 		if (tail == nullptr){
 			return false;
 		}
+		if (count == 1){
+			delete head;
+			head = nullptr;
+			tail = nullptr;
+			count = 0;
+			return true;
+		}
 		Node* current = tail;
 		tail = tail->prev;
-		if (tail != nullptr){
-			tail->next = nullptr;
-		}
-		else{
-			head = nullptr;
-		}
+		tail->next = nullptr;
+
 		delete current;
 		count--;
 		return true;
@@ -115,6 +121,7 @@ public:
 		if (this == &other){
 			return *this;
 		}
+		clear();
 		head = other.head;
 		tail = other.tail;
 		count = other.count;
