@@ -44,7 +44,7 @@ public:
         array_ = new T[rhs->capacity_];
         capacity_ = rhs.capacity_;
         curr_size_ = rhs.curr_size_;
-        for (int i = 0; i < capacity_; i++){
+        for (int i = 0; i < curr_size_; i++){
             array_[i] = rhs.array_[i];
         }
         return *this;
@@ -124,7 +124,7 @@ public:
         }
         T dequeueVal = array_[0];
         for (size_t i = 0; i < curr_size_; i++){
-            array_[i] = array_[i-1];
+            array_[i] = array_[i+1];
         }
         curr_size_--;
         if (curr_size_ <= capacity_ / 4 && capacity_ > 1) {
