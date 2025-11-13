@@ -20,6 +20,9 @@ public:
 
     // Deletion
     T pop() override{
+        if (list.getHead() == nullptr){
+            throw std::runtime_error("Queue is empty");
+        }
         T data = list.getHead()->data;
         list.removeHead();
         return data;
